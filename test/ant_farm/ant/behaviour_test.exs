@@ -15,6 +15,12 @@ defmodule AntFarm.Ant.BehaviourTest do
       assert focus > 0
     end
 
+    test "when state is resting and focus is not 0 it keeps resting", %{state: state} do
+      state = %{state | state: State.resting_state(), focus: 100}
+
+      assert %State{state: :resting, focus: 99} = Behaviour.process(state)
+    end
+
     test "when state is walking and focus is 0 it starts resting", %{state: state} do
       state = %{state | state: State.walking_state(), focus: 0}
 
@@ -26,6 +32,19 @@ defmodule AntFarm.Ant.BehaviourTest do
       state = %{state | state: State.walking_state(), focus: 100}
 
       assert %State{state: :walking, focus: 99} = Behaviour.process(state)
+    end
+
+    test "when state is panicking and focus is 0 it starts walking", %{state: state} do
+      state = %{state | state: State.panicking_state(), focus: 0}
+
+      assert %State{state: :walking, focus: focus} = Behaviour.process(state)
+      assert focus > 0
+    end
+
+    test "when state is panicking and focus is not 0 it keeps panicking", %{state: state} do
+      state = %{state | state: State.panicking_state(), focus: 100}
+
+      assert %State{state: panicking, focus: 99} = Behaviour.process(state)
     end
   end
 end

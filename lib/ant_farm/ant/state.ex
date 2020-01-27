@@ -123,6 +123,8 @@ defmodule AntFarm.Ant.State do
 
   def walking_state, do: @walking_state
 
+  def panicking_state, do: @panicking_state
+
   defp random_state, do: Enum.random(@states)
 
   defp random_focus(@walking_state), do: :rand.uniform(@max_walking_focus)
